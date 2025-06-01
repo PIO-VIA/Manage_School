@@ -44,7 +44,7 @@ public class SwaggerConfig {
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("Équipe de Développement")
-                                .email("dev@schoolmanagement.com")
+                                .email("piodjiele@gmail.com")
                                 .url("https://schoolmanagement.com"))
                         .license(new License()
                                 .name("MIT License")
