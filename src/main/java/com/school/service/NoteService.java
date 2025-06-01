@@ -87,11 +87,20 @@ public class NoteService {
     @Transactional(readOnly = true)
     public List<NoteDTOs.NoteResponse> getNotesBySequence(Integer sequence) {
         log.info("Récupération des notes de la séquence: {}", sequence);
-
+        
+        if (sequence == null) {
+            throw new IllegalArgumentException("Le numéro de séquence ne peut pas être null");
+        }
+        
         List<Composer> notes = composerRepository.findBySequence(sequence);
+        
+        if (notes.isEmpty()) {
+            log.info("Aucune note trouvée pour la séquence: {}", sequence);
+        }
+        
         return notes.stream()
                 .map(noteMapper::toResponse)
-                .sorted(Comparator.comparing(note -> note.getEleve().getNom())
+                .sorted(Comparator.comparing((NoteDTOs.NoteResponse note) -> note.getEleve().getNom())
                         .thenComparing(note -> note.getMatiere().getNom()))
                 .collect(Collectors.toList());
     }
